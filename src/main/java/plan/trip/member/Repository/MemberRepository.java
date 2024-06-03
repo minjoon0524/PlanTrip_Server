@@ -1,8 +1,8 @@
-package plan.trip.join.Repository;
+package plan.trip.member.Repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import plan.trip.join.entity.Member;
+import plan.trip.member.entity.Member;
 
 import java.util.Optional;
 @Repository

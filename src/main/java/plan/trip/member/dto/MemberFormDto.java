@@ -1,4 +1,4 @@
-package plan.trip.join.dto;
+package plan.trip.member.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;

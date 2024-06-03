@@ -1,10 +1,10 @@
-package plan.trip.join.entity;
+package plan.trip.member.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import plan.trip.constant.Role;
-import plan.trip.join.dto.MemberFormDto;
+import plan.trip.member.dto.MemberFormDto;
 
 @Entity
 @Getter
