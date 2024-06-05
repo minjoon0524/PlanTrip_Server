@@ -5,6 +5,9 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import plan.trip.constant.Role;
+import plan.trip.member.entity.Member;
 
 @Getter
 @Setter
@@ -25,4 +28,13 @@ public class MemberFormDto {
     @Length(min = 4, max = 12, message = "비밀번호는 최소 4자, 최대 12자를 입력해주세요.")
     private String password;
 
+
+    // EntityToDto를 위한 작업
+    public static MemberFormDto searchByMember(Member member) {
+        MemberFormDto memberFormDto = MemberFormDto.builder()
+                .email(member.getEmail())
+                .name(member.getName())
+                .build();
+        return memberFormDto;
+    }
 }
