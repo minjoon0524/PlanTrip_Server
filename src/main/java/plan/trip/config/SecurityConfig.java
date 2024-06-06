@@ -1,28 +1,24 @@
 package plan.trip.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig  {
+public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -30,22 +26,25 @@ public class SecurityConfig  {
                 .csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                // 폼로그인
-                .formLogin((form)-> form
-                        //.loginPage("/member/login")
+                .formLogin(form -> form
+                        .loginPage("/login")  // 로그인 페이지 URL 설정
+                        .loginProcessingUrl("/member/login")  // 로그인 처리 URL
                         .defaultSuccessUrl("/", true)
+                        .permitAll()
                 )
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/", "/member/**").permitAll()
-                        .anyRequest().authenticated())
-                // 로그아웃
-                .logout((logout) -> logout
+                        .anyRequest().authenticated()
+                )
+                .logout(logout -> logout
                         .logoutUrl("/member/logout")
                         .logoutSuccessUrl("/")
                         .invalidateHttpSession(true)
+                        .permitAll()
                 )
-                .sessionManagement(management ->management
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                .sessionManagement(management -> management
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                );
 
         return http.build();
     }
@@ -64,7 +63,6 @@ public class SecurityConfig  {
         return source;
     }
 
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -77,8 +75,4 @@ public class SecurityConfig  {
         filter.setForceEncoding(true);
         return filter;
     }
-
-
-
-
 }
