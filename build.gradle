@@ -1,4 +1,4 @@
-// querydsl 추가 1
+// querydsl 추가1
 buildscript {
 	ext {
 		queryDslVersion = "5.0.0"
@@ -44,7 +44,7 @@ dependencies {
 	testCompileOnly 'org.projectlombok:lombok'
 	testAnnotationProcessor 'org.projectlombok:lombok'
 
-	// querydsl 추가 2
+	// querydsl 추가2
 	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}:jakarta"
 	annotationProcessor(
 			"jakarta.persistence:jakarta.persistence-api",
@@ -60,7 +60,7 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
-// querydsl 추가 3
+// querydsl 추가3
 sourceSets {
 	main {
 		java {
